@@ -21,7 +21,7 @@ import javax.swing.*;
 
 final class MySlitherCanvas<numberOfElements> extends JPanel {
     private static final List<Integer> givenList = Arrays.asList(0x2B2B2B,0x930157, 0x0000cc);
-    private static int numberOfElements = 2;
+    //random colours
     private static final Random randomizer = new Random();
     private static final int random = givenList.get(randomizer.nextInt(givenList.size()));
     private static final Color BACKGROUND_COLOR = new Color(random);
