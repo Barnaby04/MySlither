@@ -21,13 +21,19 @@ import javax.swing.*;
 
 final class MySlitherCanvas<numberOfElements> extends JPanel {
     private static final List<Integer> givenList = Arrays.asList(0x2B2B2B,0x930157, 0x0000cc);
-    //random colours
+    //random colours - background
+    private static final List<Integer> foodList = Arrays.asList(0xff9966, 0x66ff99, 0x3333cc,0x993366, 0xff99cc, 0x590c2b, 0x54385a, 0x7cfc00, 0xfaff3a);
+    //random colours - food
+    private static final Random foodRandomizer = new Random();
+    //made an object for random colour selection, though i'll probably change it
     private static final Random randomizer = new Random();
     private static final int random = givenList.get(randomizer.nextInt(givenList.size()));
+    private static final int foodRandom = foodList.get(foodRandomizer.nextInt(foodList.size()));
+    //stores the random color in the integer "foodRandom"
     private static final Color BACKGROUND_COLOR = new Color(random);
     private static final Color FOREGROUND_COLOR = new Color(0xA9B7C6);
     private static final Color SECTOR_COLOR = new Color(0x803C3F41, true);
-    private static final Color FOOD_COLOR = new Color(0xCC7832);
+    private static final Color FOOD_COLOR = new Color(foodRandom);
     private static final Color PREY_COLOR = new Color(0xFFFF00);
     private static final float[] PREY_HALO_FRACTIONS = new float[]{0.5f, 1f};
     private static final Color[] PREY_HALO_COLORS = new Color[]{new Color(0x60FFFF00, true), new Color(0x00FFFF00, true)};
@@ -49,6 +55,8 @@ final class MySlitherCanvas<numberOfElements> extends JPanel {
     private long lastFrameTime;
     private double fps;
     final ScheduledExecutorService repaintThread;
+
+
 
     final MouseInput mouseInput = new MouseInput();
 
@@ -181,8 +189,11 @@ final class MySlitherCanvas<numberOfElements> extends JPanel {
             g.drawOval(-64, -64, model.gameRadius * 2 + 128, model.gameRadius * 2 + 128);
             g.setStroke(oldStroke);
 
+            //creates a single set colour for food
+
             g.setColor(FOOD_COLOR);
             model.foods.values().forEach(food -> {
+
                 double foodRadius = food.getRadius();
                 g.fill(new Ellipse2D.Double(food.x - foodRadius, food.y - foodRadius, foodRadius * 2, foodRadius * 2));
             });
