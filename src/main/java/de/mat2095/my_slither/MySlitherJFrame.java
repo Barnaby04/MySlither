@@ -17,72 +17,60 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 final class MySlitherJFrame extends JFrame {
 
+    //New and improved list of selectable colors
     private static final String[] SNAKES = {
-        "00 - purple",
-        "01 - blue",
-        "02 - cyan",
-        "03 - green",
-        "04 - yellow",
-        "05 - orange",
-        "06 - salmon",
-        "07 - red",
-        "08 - violet",
-        "09 - flag: USA",
-        "10 - flag: Russia",
-        "11 - flag: Germany",
-        "12 - flag: Italy",
-        "13 - flag: France",
-        "14 - white/red",
-        "15 - rainbow",
-        "16 - blue/yellow",
-        "17 - white/blue",
-        "18 - red/white",
-        "19 - white",
-        "20 - green/purple",
-        "21 - flag: Brazil",
-        "22 - flag: Ireland",
-        "23 - flag: Romania",
-        "24 - cyan/yellow +extra",
-        "25 - purple/orange +extra",
-        "26 - grey/brown",
-        "27 - green with eye",
-        "28 - yellow/green/red",
-        "29 - black/yellow",
-        "30 - stars/EU",
-        "31 - stars",
-        "32 - EU",
-        "33 - yellow/black",
-        "34 - colorful",
-        "35 - red/white/pink",
-        "36 - blue/white/light-blue",
-        "37 - Kwebbelkop",
-        "38 - yellow",
-        "39 - PewDiePie",
-        "40 - green happy",
-        "41 - red with eyes",
-        "42 - Google Play",
-        "43 - UK",
-        "44 - Ghost",
-        "45 - Canada",
-        "46 - Swiss",
-        "47 - Moldova",
-        "48 - Vietnam",
-        "49 - Argentina",
-        "50 - Colombia",
-        "51 - Thailand",
-        "52 - red/yellow",
-        "53 - glowy-blue",
-        "54 - glowy-red",
-        "55 - glowy-yellow",
-        "56 - glowy-orange",
-        "57 - glowy-purple",
-        "58 - glowy-green",
-        "59 - yellow-M",
-        "60 - detailed UK",
-        "61 - glowy-colorful",
-        "62 - purple spiral",
-        "63 - red/black",
-        "64 - blue/black"
+        "00 - GREEN/GREEN",
+        "01 - GREEN/RED",
+        "02 - GREEN/BLUE",
+        "03 - GREEN/CYAN",
+        "04 - GREEN/MAGENTA",
+        "05 - GREEN/YELLOW",
+        "06 - GREEN/ORANGE",
+        "07 - GREEN/PINK",
+        "08 - GREEN/BLACK",
+        "09 - GREEN/GRAY",
+        "10 - GREEN/DARK_GRAY",
+        "11 - GREEN/LIGHT_GRAY",
+        "12 - GREEN/WHITE",
+        "13 - BLUE/GREEN",
+        "14 - BLUE/RED",
+        "16 - BLUE/BLUE",
+        "17 - BLUE/CYAN",
+        "18 - BLUE/MAGENTA",
+        "19 - BLUE/YELLOW",
+        "20 - BLUE/ORANGE",
+        "21 - BLUE/PINK",
+        "22 - BLUE/BLACK",
+        "23 - BLUE/GRAY",
+        "24 - BLUE/DARK_GRAY",
+        "25 - BLUE/LIGHT_GRAY",
+        "26 - BLUE/WHITE",
+        "27 - YELLOW/GREEN",
+        "28 - YELLOW/RED",
+        "29 - YELLOW/BLUE",
+        "30 - YELLOW/CYAN",
+        "31 - YELLOW/MAGENTA",
+        "32 - YELLOW/YELLOW",
+        "33 - YELLOW/ORANGE",
+        "34 - YELLOW/PINK",
+        "35 - YELLOW/BLACK",
+        "36 - YELLOW/GRAY",
+        "37 - YELLOW/DARK_GRAY",
+        "38 - YELLOW/LIGHT_GRAY",
+        "39 - YELLOW/WHITE",
+        "40 - RED/GREEN",
+        "41 - RED/RED",
+        "42 - RED/BLUE",
+        "43 - RED/CYAN",
+        "44 - RED/MAGENTA",
+        "45 - RED/YELLOW",
+        "46 - RED/ORANGE",
+        "47 - RED/PINK",
+        "48 - RED/BLACK",
+        "49 - RED/GRAY",
+        "50 - RED/DARK_GRAY",
+        "51 - RED/LIGHT_GRAY",
+        "52 - RED/WHITE",
     };
 
     // TODO: skins, prey-size, snake-length/width, bot-layer, that-other-thing(?), show ping
@@ -446,5 +434,27 @@ final class MySlitherJFrame extends JFrame {
             this.buttonEnabled = buttonEnabled;
             this.allowModifyData = allowModifyData;
         }
+    }
+
+    //Method that passes a head color based on the currently selected JComboBox row.
+    public Color getSelectedHeadColor()
+    {
+        int[] pickHCol = new int[] {0x6A8759,0x6A8759,0x6A8759,0x6A8759,0x6A8759,0x6A8759,0x6A8759,0x6A8759,0x6A8759,0x6A8759,0x6A8759,0x6A8759,0x6A8759,
+            0x39AFFF,0x39AFFF,0x39AFFF,0x39AFFF,0x39AFFF,0x39AFFF,0x39AFFF,0x39AFFF,0x39AFFF,0x39AFFF,0x39AFFF,0x39AFFF,0x39AFFF,
+            0xFFFF00,0xFFFF00,0xFFFF00,0xFFFF00,0xFFFF00,0xFFFF00,0xFFFF00,0xFFFF00,0xFFFF00,0xFFFF00,0xFFFF00,0xFFFF00,0xFFFF00,
+            0xFF0000,0xFF0000,0xFF0000,0xFF0000,0xFF0000,0xFF0000,0xFF0000,0xFF0000,0xFF0000,0xFF0000,0xFF0000,0xFF0000,0xFF0000};
+        Color HedCol = new Color(pickHCol[snake.getSelectedIndex()]);
+        return HedCol;
+    }
+
+    //Method that passes a body color based on the currently selected JComboBox row.
+    public Color getSelectedBodyColor()
+    {
+        int[] pickBCol = new int[] {0x6A8759,0xFF0000,0x39AFFF,0x00FFFF,0xFF00FF,0xFFFF00,0xFFA500,0xFF69B4,0x000000,0x808080,0x696969,0xC0C0C0,0xFFFFFF,
+            0x6A8759,0xFF0000,0x39AFFF,0x00FFFF,0xFF00FF,0xFFFF00,0xFFA500,0xFF69B4,0x000000,0x808080,0x696969,0xC0C0C0,0xFFFFFF,
+            0x6A8759,0xFF0000,0x39AFFF,0x00FFFF,0xFF00FF,0xFFFF00,0xFFA500,0xFF69B4,0x000000,0x808080,0x696969,0xC0C0C0,0xFFFFFF,
+            0x6A8759,0xFF0000,0x39AFFF,0x00FFFF,0xFF00FF,0xFFFF00,0xFFA500,0xFF69B4,0x000000,0x808080,0x696969,0xC0C0C0,0xFFFFFF};
+        Color BodCol = new Color(pickBCol[snake.getSelectedIndex()]);
+        return BodCol;
     }
 }
