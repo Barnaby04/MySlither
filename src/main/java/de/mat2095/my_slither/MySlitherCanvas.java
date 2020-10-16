@@ -10,15 +10,21 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javax.swing.*;
 
 
-final class MySlitherCanvas extends JPanel {
-
-    private static final Color BACKGROUND_COLOR = new Color(0x2B2B2B);
+final class MySlitherCanvas<numberOfElements> extends JPanel {
+    private static final List<Integer> givenList = Arrays.asList(0x2B2B2B,0x930157, 0x0000cc);
+    private static int numberOfElements = 2;
+    private static final Random randomizer = new Random();
+    private static final int random = givenList.get(randomizer.nextInt(givenList.size()));
+    private static final Color BACKGROUND_COLOR = new Color(random);
     private static final Color FOREGROUND_COLOR = new Color(0xA9B7C6);
     private static final Color SECTOR_COLOR = new Color(0x803C3F41, true);
     private static final Color FOOD_COLOR = new Color(0xCC7832);
@@ -37,7 +43,6 @@ final class MySlitherCanvas extends JPanel {
     private static final Color NAME_SHADOW_COLOR = new Color(0xC02B2B2B, true);
     private static final Font NAME_FONT = Font.decode("SansSerif-BOLD");
     private static final Font DEBUG_FONT = Font.decode("SansSerif-PLAIN-12");
-
     private boolean[] map;
     private final MySlitherJFrame view;
     private int zoom = 12;
