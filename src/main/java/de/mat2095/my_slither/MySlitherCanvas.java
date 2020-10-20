@@ -21,27 +21,38 @@ import javax.swing.*;
 
 final class MySlitherCanvas<numberOfElements> extends JPanel {
 
-    //array of colours
-    private static final Color[] FOOD_COLOR = new Color[] {Color.RED, Color.YELLOW, Color.GREEN, Color.BLUE};
-
+    //Random colors for various purposes
     private static final List<Integer> givenList = Arrays.asList(0x2B2B2B,0x930157, 0x0000cc);
-    //random colours - background
+    private static final List<Integer> givenList2 = Arrays.asList(0x006400,0x7FFFD4,0xDAA520,0xB22222); 
+    private static final List<Integer> givenList3 = Arrays.asList(0x6A8759,0xFF0000,0x39AFFF,0x00FFFF,0xFF00FF,0xFFFF00,0xFFA500,0xFF69B4,0x000000,0x808080,0x696969,0xC0C0C0,0xFFFFFF);
     private static final Random randomizer = new Random();
     private static final int random = givenList.get(randomizer.nextInt(givenList.size()));
+    private static final int random2 = givenList2.get(randomizer.nextInt(givenList2.size()));
+    private static final int random3 = givenList3.get(randomizer.nextInt(givenList3.size()));
+    private static final List<Integer> foodList = Arrays.asList(0xff9966, 0x66ff99, 0x3333cc,0x993366, 0xff99cc, 0x590c2b, 0x54385a, 0x7cfc00, 0xfaff3a);
+    //random colours - food
+    private static final Random foodRandomizer = new Random();
+    //made an object for random colour selection, though i'll probably change it
+    private static final int foodRandom = foodList.get(foodRandomizer.nextInt(foodList.size()));
+    //stores the random color in the integer "foodRandom"
 
+    //Random background color
     private static final Color BACKGROUND_COLOR = new Color(random);
     private static final Color FOREGROUND_COLOR = new Color(0xA9B7C6);
     private static final Color SECTOR_COLOR = new Color(0x803C3F41, true);
+    private static final Color FOOD_COLOR = new Color(foodRandom);
     private static final Color PREY_COLOR = new Color(0xFFFF00);
     private static final float[] PREY_HALO_FRACTIONS = new float[]{0.5f, 1f};
     private static final Color[] PREY_HALO_COLORS = new Color[]{new Color(0x60FFFF00, true), new Color(0x00FFFF00, true)};
-    private static final Color SNAKE_COLOR = new Color(0x287BDE);
-    private static final Color OWN_SNAKE_COLOR = new Color(0x39AFFF);
+    //Random enemy snake color
+    private static final Color SNAKE_COLOR = new Color(random2);
+    //Removed the static variable for OWN_SNAKE_COLOR to allow the choice for it.
     private static final float[] SNAKE_HALO_FRACTIONS = new float[]{0.5f, 1f};
     private static final Color[] SNAKE_HALO_COLORS = new Color[]{new Color(0x60287BDE, true), new Color(0x00287BDE, true)};
+    //Random enemy snake body color
     private static final Color[] OWN_SNAKE_HALO_COLORS = new Color[]{new Color(0x6039AFFF, true), new Color(0x0039AFFF, true)};
-    private static final Color SNAKE_BODY_COLOR = new Color(0x6A8759);
-    private static final Color OWN_SNAKE_BODY_COLOR = new Color(0xA5C261);
+    private static final Color SNAKE_BODY_COLOR = new Color(random3);
+    //Removed the static variable for OWN_SNAKE_BODY_COLOR to allow the choice for it.
     private static final Color MAP_COLOR = new Color(0xA0A9B7C6, true);
     private static final Color MAP_POSITION_COLOR = new Color(0xE09E2927, true);
     private static final Color NAME_SHADOW_COLOR = new Color(0xC02B2B2B, true);
@@ -181,16 +192,15 @@ final class MySlitherCanvas<numberOfElements> extends JPanel {
                 }
             }
 
-
             g.setColor(FOREGROUND_COLOR);
             Stroke oldStroke = g.getStroke();
             g.setStroke(new BasicStroke(128));
             g.drawOval(-64, -64, model.gameRadius * 2 + 128, model.gameRadius * 2 + 128);
             g.setStroke(oldStroke);
 
-            //this calls the random colour method i added at the bottom of the code, it picks a random element from the array
+            //creates a single set colour for food
 
-            g.setColor(randcolor());
+            g.setColor(FOOD_COLOR);
             model.foods.values().forEach(food -> {
 
                 double foodRadius = food.getRadius();
@@ -213,7 +223,8 @@ final class MySlitherCanvas<numberOfElements> extends JPanel {
             model.snakes.values().forEach(snake -> {
                 double thickness = 16 + snake.body.size() / 4.0;
                 if (snake.body.size() >= 2) {
-                    g.setColor(snake == model.snake ? OWN_SNAKE_BODY_COLOR : SNAKE_BODY_COLOR);
+                    //Calls the MySlitherJFrame method that passes a body color based on the currently selected JComboBox row.
+                    g.setColor(snake == model.snake ? view.getSelectedBodyColor() : SNAKE_BODY_COLOR);
                     g.setStroke(new BasicStroke((float) thickness, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
                     double totalLength = 0; // TODO: respect FAM, ???
@@ -255,7 +266,8 @@ final class MySlitherCanvas<numberOfElements> extends JPanel {
                         snake == model.snake ? OWN_SNAKE_HALO_COLORS : SNAKE_HALO_COLORS));
                     g.fillRect((int) Math.round(snake.x - thickness * 3 / 2 - 1), (int) Math.round(snake.y - thickness * 3 / 2 - 1), (int) (thickness * 3 + 2), (int) (thickness * 3 + 2));
                 }
-                g.setColor(snake == model.snake ? OWN_SNAKE_COLOR : SNAKE_COLOR);
+                //Calls the MySlitherJFrame method that passes a head color based on the currently selected JComboBox row.
+                g.setColor(snake == model.snake ? view.getSelectedHeadColor() : SNAKE_COLOR);
                 g.fill(new Ellipse2D.Double(snake.x - thickness * 2 / 3, snake.y - thickness * 2 / 3, thickness * 4 / 3, thickness * 4 / 3));
 
                 String lengthText = "" + model.getSnakeLength(snake.body.size(), snake.getFam());
@@ -310,10 +322,4 @@ final class MySlitherCanvas<numberOfElements> extends JPanel {
         g.drawString("FPS: " + Math.round(fps), 0, g.getFontMetrics().getAscent());
         lastFrameTime = newFrameTime;
     }
-
-    //this method returns random  colour from array
-    public Color randcolor(){
-        return FOOD_COLOR[randomizer.nextInt(FOOD_COLOR.length)];
-    }
-
 }
