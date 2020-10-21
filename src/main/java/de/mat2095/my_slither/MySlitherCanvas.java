@@ -21,15 +21,16 @@ import javax.swing.*;
 
 final class MySlitherCanvas<numberOfElements> extends JPanel {
 
-    //array of colours
-    private static final Color[] FOOD_COLOR = new Color[] {Color.RED, Color.YELLOW, Color.GREEN, Color.BLUE};
-
-    private static final List<Integer> givenList = Arrays.asList(0x2B2B2B,0x930157, 0x0000cc);
-    //random colours - background
     private static final Random randomizer = new Random();
-    private static final int random = givenList.get(randomizer.nextInt(givenList.size()));
 
+    //array of colours
+    private static final Color[] FOOD_COLOR = new Color[] {Color.PINK, Color.YELLOW, Color.GREEN, Color.BLUE};
+
+    //random colours - background
+    private static final List<Integer> givenList = Arrays.asList(0x2B2B2B,0x930157, 0x0000cc);
+    private static final int random = givenList.get(randomizer.nextInt(givenList.size()));
     private static final Color BACKGROUND_COLOR = new Color(random);
+
     private static final Color FOREGROUND_COLOR = new Color(0xA9B7C6);
     private static final Color SECTOR_COLOR = new Color(0x803C3F41, true);
     private static final Color PREY_COLOR = new Color(0xFFFF00);
@@ -188,12 +189,27 @@ final class MySlitherCanvas<numberOfElements> extends JPanel {
             g.drawOval(-64, -64, model.gameRadius * 2 + 128, model.gameRadius * 2 + 128);
             g.setStroke(oldStroke);
 
-            //this calls the random colour method i added at the bottom of the code, it picks a random element from the array
 
-            g.setColor(randcolor());
+
+            //Modified the function so that the colour is set depending on the radius of the food being filled
             model.foods.values().forEach(food -> {
 
                 double foodRadius = food.getRadius();
+
+                //if the radius is x size then set it to y color
+                if((foodRadius >= 5) && (foodRadius < 6)){
+                    g.setColor(FOOD_COLOR[0]);
+                }
+                if((foodRadius >=4) && (foodRadius < 5)){
+                    g.setColor(FOOD_COLOR[1]);
+                }
+                if((foodRadius > 3) && (foodRadius < 4)){
+                    g.setColor(FOOD_COLOR[2]);
+                }
+                if(foodRadius > 7){
+                    g.setColor(FOOD_COLOR[3]);
+                }
+
                 g.fill(new Ellipse2D.Double(food.x - foodRadius, food.y - foodRadius, foodRadius * 2, foodRadius * 2));
             });
 
@@ -311,9 +327,6 @@ final class MySlitherCanvas<numberOfElements> extends JPanel {
         lastFrameTime = newFrameTime;
     }
 
-    //this method returns random  colour from array
-    public Color randcolor(){
-        return FOOD_COLOR[randomizer.nextInt(FOOD_COLOR.length)];
-    }
+
 
 }
