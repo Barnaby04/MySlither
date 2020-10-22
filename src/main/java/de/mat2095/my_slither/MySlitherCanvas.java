@@ -27,7 +27,7 @@ final class MySlitherCanvas<numberOfElements> extends JPanel {
     private static final Color[] FOOD_COLOR = new Color[] {Color.PINK, Color.YELLOW, Color.GREEN, Color.BLUE};
 
     //random colours - background
-    private static final List<Integer> givenList = Arrays.asList(0x2B2B2B,0x930157, 0x0000cc, 0xfc037f, 0x6f03fc,0x4a13bf);
+    private static final List<Integer> givenList = Arrays.asList(0x2B2B2B,0x930157, 0x0000cc, 0xe84c0e, 0x6f03fc,0x4a13bf);
     private static final int random = givenList.get(randomizer.nextInt(givenList.size()));
     private static final Color BACKGROUND_COLOR = new Color(random);
     private static final Color FOREGROUND_COLOR = new Color(0xA9B7C6);
