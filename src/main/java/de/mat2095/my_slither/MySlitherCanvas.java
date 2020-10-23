@@ -47,8 +47,8 @@ final class MySlitherCanvas<numberOfElements> extends JPanel {
     private static final Color MAP_COLOR = new Color(0xA0A9B7C6, true);
     private static final Color MAP_POSITION_COLOR = new Color(0xE09E2927, true);
     private static final Color NAME_SHADOW_COLOR = new Color(0xC02B2B2B, true);
-    private static final Font NAME_FONT = Font.decode("SansSerif-BOLD");
-    private static final Font DEBUG_FONT = Font.decode("SansSerif-PLAIN-12");
+    private static final Font NAME_FONT = Font.decode("Cooper Black-BOLD");
+    private static final Font DEBUG_FONT = Font.decode("Cooper Black-PLAIN-12");
     private boolean[] map;
     private final MySlitherJFrame view;
     private int zoom = 12;
